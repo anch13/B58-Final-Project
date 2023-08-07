@@ -40,6 +40,9 @@
 .eqv BROWN 0x870000
 .eqv BLACK 0x000000
 .eqv PINK 0xff1493
+.eqv ORANGE 0xff8000
+.eqv DOOR_BLUE 0x00b7ef
+.eqv DOOR_BROWN 0x9c5a3c
 .eqv WIDTH 64
 .eqv HEIGHT 64
 .eqv ENDLINE 63
@@ -73,6 +76,7 @@ la $s2, colours
 la $s3, general
 
 jal draw_lives
+jal draw_door 
 
 #x sprite
 li $t5, X
@@ -164,6 +168,7 @@ lw $t5, 16($s0)
 beqz $t5, game_end
 
 jal draw_lives
+jal draw_door
 
 #platform setup
 li $t4, 0
@@ -635,6 +640,36 @@ draw_lives:
 	sw $t4, 1032($t0)
 	jr $s4
 	
+draw_door:
+	add $s4, $zero, $ra
+	li $t0, BASE_ADDRESS
+	li $t4, DOOR_BROWN
+	sw $t4, 2544($t0)
+	sw $t4, 2548($t0)
+	sw $t4, 2552($t0)
+	sw $t4, 2556($t0)
+	sw $t4, 2800($t0)
+	sw $t4, 2804($t0)
+	sw $t4, 2808($t0)
+	sw $t4, 2812($t0)
+	sw $t4, 3056($t0)
+	sw $t4, 3060($t0)
+	sw $t4, 3064($t0)
+	sw $t4, 3068($t0)
+	sw $t4, 3312($t0)
+	sw $t4, 3316($t0)
+	sw $t4, 3320($t0)
+	sw $t4, 3324($t0)
+	sw $t4, 3568($t0)
+	sw $t4, 3572($t0)
+	sw $t4, 3576($t0)
+	sw $t4, 3580($t0)
+	sw $t4, 3824($t0)
+	sw $t4, 3828($t0)
+	sw $t4, 3832($t0)
+	sw $t4, 3836($t0)
+	jr $s4
+		
 drawSprite: 
 	li $t7, PIXEL
 	li $t0, BASE_ADDRESS
@@ -804,7 +839,7 @@ move_enemy1:#moving an enemy
 		li $t5,1
 		sw $t5, 4($t4)
 		lw $t5, 16($t4)
-		li $t6, 59
+		li $t6, 50
 		beq $t6, $t5, moving_left_enemy1
 		addi $t5, $t5, 1
 		sw $t5, 16($t4)
